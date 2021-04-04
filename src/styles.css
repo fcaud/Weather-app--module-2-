@@ -54,6 +54,12 @@ hr {
   opacity: 90%;
 }
 
+a.code-source-link {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}
+
 .header-filler {
   height: 65px;
   z-index: 100;
