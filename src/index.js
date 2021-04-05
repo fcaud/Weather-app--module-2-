@@ -11,9 +11,12 @@ function getTemps(ID, response) {
   let cityName = response.data.name;
   let windSpeed = Math.round(response.data.wind.speed);
   let humidity = Math.round(response.data.main.humidity);
-  let weatherDescription = response.data.weather[0].main;
+  let weatherDescription = response.data.weather[0].description;
 
   let cityHeader = document.querySelector(`#${ID} h2`);
+  let headlineCityIcon = document.querySelector(
+    `#${ID} .headline-weather-icon i`
+  );
   let headerCurrentTemp = document.querySelector(`#${ID} .temp-num`);
   let windSpeedText = document.querySelector(`#${ID} .p-wind span`);
   let humidityText = document.querySelector(`#${ID} .p-humidity span`);
@@ -22,6 +25,29 @@ function getTemps(ID, response) {
   headerCurrentTemp.innerHTML = currentTemp;
   windSpeedText.innerHTML = windSpeed;
   humidityText.innerHTML = humidity;
+  changeWeatherIcon(weatherDescription, headlineCityIcon);
+}
+
+function changeWeatherIcon(description, targetIcon) {
+  if (description === "clear sky") {
+    targetIcon.classList = "fas fa-sun";
+  } else if (description === "few clouds") {
+    targetIcon.classList = "fas fa-cloud-sun";
+  } else if (description === "scattered clouds") {
+    targetIcon.classList = "fas fa-cloud";
+  } else if (description === "broken clouds") {
+    targetIcon.classList = "fas fa-cloud";
+  } else if (description === "shower rain") {
+    targetIcon.classList = "fas fa-cloud-rain";
+  } else if (description === "rain") {
+    targetIcon.classList = "fas fa-cloud-showers-heavy";
+  } else if (description === "thunderstorm") {
+    targetIcon.classList = "fas fa-bolt";
+  } else if (description === "snow") {
+    targetIcon.classList = "fas fa-snowflake";
+  } else if (description === "mist") {
+    targetIcon.classList = "fas fa-stream";
+  }
 }
 
 function citySearch(event) {
