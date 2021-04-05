@@ -1,7 +1,4 @@
 // pull the units from the API as opposed to manual conversion in the code  -get rounding diff between manual and api
-// coniditonal formatting based on temp or weather
-// change logo
-// extra stats data
 // forecast data
 // set-up the placeholder module to change to content on search
 // set-up add module
