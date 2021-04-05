@@ -26,6 +26,7 @@ function getTemps(ID, response) {
   windSpeedText.innerHTML = windSpeed;
   humidityText.innerHTML = humidity;
   changeWeatherIcon(weatherDescription, headlineCityIcon);
+  temperatureConditionalFomratting(ID, currentTemp);
 }
 
 function changeWeatherIcon(description, targetIcon) {
@@ -47,6 +48,15 @@ function changeWeatherIcon(description, targetIcon) {
     targetIcon.classList = "fas fa-snowflake";
   } else if (description === "mist") {
     targetIcon.classList = "fas fa-stream";
+  }
+}
+
+function temperatureConditionalFomratting(ID, temp) {
+  let findSection = document.querySelector(`section#${ID}`);
+  if (temp >= 15) {
+    findSection.classList = "weather-module weather-hot";
+  } else {
+    findSection.classList = "weather-module weather-cold";
   }
 }
 
