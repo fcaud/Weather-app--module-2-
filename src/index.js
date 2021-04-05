@@ -118,12 +118,112 @@ function searchCurrentLocation(position, clickEvent) {
 
   let headTemp = document.querySelector(`#${sectionID} .headline-temperature`);
 
-  if (headTemp) {
-    axios.get(weatherCoordsApiUrl).then(function (response) {
-      getTemps(sectionID, response);
-    });
+  if (!headTemp) {
+    embedSectionContent(sectionID);
   }
+
+  axios.get(weatherCoordsApiUrl).then(function (response) {
+    getTemps(sectionID, response);
+  });
 }
+
+function embedSectionContent(ID) {
+  let placeholderCityText = document.querySelector(`#${ID} .placeholder-text`);
+  let placeholderForecastText = document.querySelector(`#${ID} .blank`);
+  placeholderCityText.classList = "city-summary";
+  placeholderCityText.innerHTML = `<h2 class="city-header">-</h2>
+          <div class="headline-weather-icon icon">
+            <i class="fas fa-cloud-rain"></i>
+          </div>
+          <div class="headline-temperature">
+            <span class="temp-num">-</span>°C
+          </div>
+          <div class="row extra-stats">
+            <div class="col"></div>
+            <div class="col">
+              <p class="p-wind">Wind speed:<br /><span>-</span>kmh</p>
+            </div>
+            <div class="col">
+              <p class="p-humidity">Humidity:<br /><span>-</span>%</p>
+            </div>
+            <div class="col"></div>
+          </div>
+          <hr />`;
+  placeholderForecastText.classList = `day-forecast`;
+  placeholderForecastText.innerHTML = `<div class="row">
+            <div class="col">
+              <h3>Mon</h3>
+              <div class="day-weather-icon icon">
+                <i class="fas fa-cloud-rain"></i>
+              </div>
+              <p class="day-temperature">
+                <span class="temp-num">3</span>°C /
+                <strong><span class="temp-num">5</span>°C</strong>
+              </p>
+            </div>
+            <div class="col">
+              <h3>Tue</h3>
+              <div class="day-weather-icon icon">
+                <i class="fas fa-cloud-rain"></i>
+              </div>
+              <p class="day-temperature">
+                <span class="temp-num">3</span>°C /
+                <strong><span class="temp-num">5</span>°C</strong>
+              </p>
+            </div>
+            <div class="col">
+              <h3>Wed</h3>
+              <div class="day-weather-icon icon">
+                <i class="fas fa-cloud-rain"></i>
+              </div>
+              <p class="day-temperature">
+                <span class="temp-num">3</span>°C /
+                <strong><span class="temp-num">5</span>°C</strong>
+              </p>
+            </div>
+            <div class="col">
+              <h3>Thu</h3>
+              <div class="day-weather-icon icon">
+                <i class="fas fa-cloud-rain"></i>
+              </div>
+              <p class="day-temperature">
+                <span class="temp-num">3</span>°C /
+                <strong><span class="temp-num">5</span>°C</strong>
+              </p>
+            </div>
+            <div class="col">
+              <h3>Fri</h3>
+              <div class="day-weather-icon icon">
+                <i class="fas fa-cloud-rain"></i>
+              </div>
+              <p class="day-temperature">
+                <span class="temp-num">3</span>°C /
+                <strong><span class="temp-num">5</span>°C</strong>
+              </p>
+            </div>
+            <div class="col">
+              <h3>Sat</h3>
+              <div class="day-weather-icon icon">
+                <i class="fas fa-cloud-rain"></i>
+              </div>
+              <p class="day-temperature">
+                <span class="temp-num">3</span>°C /
+                <strong><span class="temp-num">5</span>°C</strong>
+              </p>
+            </div>
+            <div class="col">
+              <h3>Sun</h3>
+              <div class="day-weather-icon icon">
+                <i class="fas fa-cloud-rain"></i>
+              </div>
+              <p class="day-temperature">
+                <span class="temp-num">3</span>°C /
+                <strong><span class="temp-num">5</span>°C</strong>
+              </p>
+            </div>
+          </div>`;
+}
+// delete out the values for placeholders for the forecast temps
 
 function getCurrentLocation(event) {
   event.preventDefault();
