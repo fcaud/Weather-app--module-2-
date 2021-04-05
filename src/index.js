@@ -15,9 +15,13 @@ function getTemps(ID, response) {
 
   let cityHeader = document.querySelector(`#${ID} h2`);
   let headerCurrentTemp = document.querySelector(`#${ID} .temp-num`);
+  let windSpeedText = document.querySelector(`#${ID} .p-wind span`);
+  let humidityText = document.querySelector(`#${ID} .p-humidity span`);
 
   cityHeader.innerHTML = cityName;
   headerCurrentTemp.innerHTML = currentTemp;
+  windSpeedText.innerHTML = windSpeed;
+  humidityText.innerHTML = humidity;
 }
 
 function citySearch(event) {
