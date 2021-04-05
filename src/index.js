@@ -83,11 +83,11 @@ function citySearch(event) {
 
   let headTemp = document.querySelector(`#${sectionID} .headline-temperature`);
 
-  if (!headTemp) {
-    embedSectionContent(sectionID);
-  }
-
   if (citySearched) {
+    if (!headTemp) {
+      embedSectionContent(sectionID);
+    }
+
     axios.get(weatherApiUrl).then(function (response) {
       getTemps(sectionID, response);
     });
