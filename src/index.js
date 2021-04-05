@@ -81,6 +81,12 @@ function citySearch(event) {
   }
   let weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${citySearched}&appid=${weatherApiKey}&units=${unit}`;
 
+  let headTemp = document.querySelector(`#${sectionID} .headline-temperature`);
+
+  if (!headTemp) {
+    embedSectionContent(sectionID);
+  }
+
   if (citySearched) {
     axios.get(weatherApiUrl).then(function (response) {
       getTemps(sectionID, response);
