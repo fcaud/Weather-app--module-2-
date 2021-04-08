@@ -318,10 +318,40 @@ function addSection() {
   moduleX++;
   let newSection = document.createElement("section");
   newSection.setAttribute("id", `module-${moduleX}`);
-  newSection.textContent = "-";
+  newSection.setAttribute("class", "weather-module");
+  newSection.innerHTML = `<form class="search-bar">
+          <input
+            type="search"
+            name="city-search"
+            placeholder="Please enter city..."
+            class="city-search-bar"
+          />
+          <input type="submit" value="Search" class="city-search-button" />
+        </form>
+
+        <div>
+          <button class="location-button">
+            <i class="fas fa-location-arrow"></i>
+          </button>
+        </div>
+
+        <div class="form-check form-switch unit-switch">
+          <input
+            class="form-check-input unit-toggle"
+            type="checkbox"
+            id="flexSwitchCheckDefault"
+          />
+          <label class="form-check-label" for="flexSwitchCheckDefault"
+            >°C / °Ff
+          </label>
+        </div>
+
+        <div class="placeholder-text">
+          <h2 class="city-header">Search city...</h2>
+        </div>
+        <div class="blank"></div>`;
   let addModuleSection = document.getElementById("add-module-section");
-  document.body.appendChild(newSection);
-  document.body.insertBefore(newSection, addModuleSection);
+  addModuleSection.parentNode.insertBefore(newSection, addModuleSection);
 }
 
 let addSectionButton = document.querySelector(`.add-module button`);
