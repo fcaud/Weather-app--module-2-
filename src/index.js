@@ -312,7 +312,7 @@ toggleUnitSwitch.forEach(function (item) {
   item.addEventListener("click", toggleUnits);
 });
 
-let moduleX = 3;
+let moduleX = 1;
 
 function addSection() {
   moduleX++;
