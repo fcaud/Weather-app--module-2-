@@ -311,3 +311,18 @@ let toggleUnitSwitch = document.querySelectorAll(".unit-toggle");
 toggleUnitSwitch.forEach(function (item) {
   item.addEventListener("click", toggleUnits);
 });
+
+let moduleX = 1;
+
+function addSection() {
+  moduleX++;
+  let newSection = document.createElement("section");
+  newSection.setAttribute("id", `module-${moduleX}`);
+  newSection.textContent = "-";
+  let addModuleSection = document.getElementById("add-module-section");
+  document.body.appendChild(newSection);
+  document.body.insertBefore(newSection, addModuleSection);
+}
+
+let addSectionButton = document.querySelector(`.add-module button`);
+addSectionButton.addEventListener("click", addSection);
