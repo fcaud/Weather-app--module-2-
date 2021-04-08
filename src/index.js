@@ -312,13 +312,14 @@ toggleUnitSwitch.forEach(function (item) {
   item.addEventListener("click", toggleUnits);
 });
 
-let moduleX = 1;
+let moduleX = 3;
 
 function addSection() {
   moduleX++;
   let newSection = document.createElement("section");
-  newSection.setAttribute("id", `module-${moduleX}`);
   newSection.setAttribute("class", "weather-module");
+  newSection.setAttribute("id", `module-${moduleX}`);
+
   newSection.innerHTML = `<form class="search-bar">
           <input
             type="search"
@@ -342,7 +343,7 @@ function addSection() {
             id="flexSwitchCheckDefault"
           />
           <label class="form-check-label" for="flexSwitchCheckDefault"
-            >°C / °Ff
+            >°C / °F
           </label>
         </div>
 
@@ -352,6 +353,23 @@ function addSection() {
         <div class="blank"></div>`;
   let addModuleSection = document.getElementById("add-module-section");
   addModuleSection.parentNode.insertBefore(newSection, addModuleSection);
+
+  buttonClickEventsNewModules(moduleX);
+}
+
+function buttonClickEventsNewModules(ID) {
+  let newSearchButton = document.querySelector(
+    `#module-${ID} .city-search-button`
+  );
+  let newLocationButton = document.querySelector(
+    `#module-${ID} .location-button`
+  );
+  let newToggleUnitSwitch = document.querySelector(
+    `#module-${ID} .unit-toggle`
+  );
+  newSearchButton.addEventListener("click", citySearch);
+  newLocationButton.addEventListener("click", getCurrentLocation);
+  newToggleUnitSwitch.addEventListener("click", toggleUnits);
 }
 
 let addSectionButton = document.querySelector(`.add-module button`);
