@@ -1,7 +1,5 @@
 // pull the units from the API as opposed to manual conversion in the code  -get rounding diff between manual and api
 // forecast data
-// set-up the placeholder module to change to content on search
-// set-up add module
 
 function getTemps(ID, response) {
   let currentTemp = Math.round(response.data.main.temp);
@@ -156,9 +154,14 @@ function embedSectionContent(ID) {
           </div>
           <hr />`;
   placeholderForecastText.classList = `day-forecast`;
-  placeholderForecastText.innerHTML = `<div class="row">
-            <div class="col">
-              <h3>Mon</h3>
+  let forecastDays = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+  let forecastHTML = `<div class="row">`;
+
+  forecastDays.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col">
+        <h3>${day}</h3>
               <div class="day-weather-icon icon">
                 <i class="fas fa-cloud-rain"></i>
               </div>
@@ -166,68 +169,11 @@ function embedSectionContent(ID) {
                 <span class="temp-num">3</span>°C /
                 <strong><span class="temp-num">5</span>°C</strong>
               </p>
-            </div>
-            <div class="col">
-              <h3>Tue</h3>
-              <div class="day-weather-icon icon">
-                <i class="fas fa-cloud-rain"></i>
-              </div>
-              <p class="day-temperature">
-                <span class="temp-num">3</span>°C /
-                <strong><span class="temp-num">5</span>°C</strong>
-              </p>
-            </div>
-            <div class="col">
-              <h3>Wed</h3>
-              <div class="day-weather-icon icon">
-                <i class="fas fa-cloud-rain"></i>
-              </div>
-              <p class="day-temperature">
-                <span class="temp-num">3</span>°C /
-                <strong><span class="temp-num">5</span>°C</strong>
-              </p>
-            </div>
-            <div class="col">
-              <h3>Thu</h3>
-              <div class="day-weather-icon icon">
-                <i class="fas fa-cloud-rain"></i>
-              </div>
-              <p class="day-temperature">
-                <span class="temp-num">3</span>°C /
-                <strong><span class="temp-num">5</span>°C</strong>
-              </p>
-            </div>
-            <div class="col">
-              <h3>Fri</h3>
-              <div class="day-weather-icon icon">
-                <i class="fas fa-cloud-rain"></i>
-              </div>
-              <p class="day-temperature">
-                <span class="temp-num">3</span>°C /
-                <strong><span class="temp-num">5</span>°C</strong>
-              </p>
-            </div>
-            <div class="col">
-              <h3>Sat</h3>
-              <div class="day-weather-icon icon">
-                <i class="fas fa-cloud-rain"></i>
-              </div>
-              <p class="day-temperature">
-                <span class="temp-num">3</span>°C /
-                <strong><span class="temp-num">5</span>°C</strong>
-              </p>
-            </div>
-            <div class="col">
-              <h3>Sun</h3>
-              <div class="day-weather-icon icon">
-                <i class="fas fa-cloud-rain"></i>
-              </div>
-              <p class="day-temperature">
-                <span class="temp-num">3</span>°C /
-                <strong><span class="temp-num">5</span>°C</strong>
-              </p>
-            </div>
-          </div>`;
+        </div>`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  placeholderForecastText.innerHTML = forecastHTML;
 }
 // delete out the values for placeholders for the forecast temps
 
@@ -269,7 +215,7 @@ function formatDateStamp() {
   });
 
   let dateStamp = document.querySelector("#date-stamp");
-  dateStamp.innerHTML = `As at: ${day} ${date} ${month} ${time}`;
+  dateStamp.innerHTML = `${day} ${date} ${month} ${time}`;
 }
 formatDateStamp();
 
