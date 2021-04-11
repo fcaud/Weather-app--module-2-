@@ -1,5 +1,4 @@
 // pull the units from the API as opposed to manual conversion in the code  -get rounding diff between manual and api
-// forecast data
 
 function getTemps(ID, response) {
   let currentTemp = Math.round(response.data.main.temp);
@@ -32,7 +31,7 @@ function forecastApiRun(lat, lon, ID) {
   let weatherApiKey = `a853abb2375faaf0d512fcc19dee1229`;
   let forecastUnit = "metric";
 
-  let forecastApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&unit=${forecastUnit}&appid=${weatherApiKey}`;
+  let forecastApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${forecastUnit}&appid=${weatherApiKey}`;
 
   axios.get(forecastApiUrl).then(function (response) {
     getForecastTemps(ID, response);
@@ -40,12 +39,11 @@ function forecastApiRun(lat, lon, ID) {
 }
 
 function getForecastTemps(ID, response) {
-  console.log(response.data);
   let dailyForecast = response.data.daily;
 
   let dayX = 0;
 
-  dailyForecast.forEach(function () {
+  dailyForecast.forEach(function (dailyForecast) {
     if (dayX < 5) {
       let dayPlaceholder = document.querySelector(`#${ID} .day-${dayX} h3`);
       let iconPlaceholder = document.querySelector(`#${ID} .day-${dayX} i`);
@@ -55,6 +53,21 @@ function getForecastTemps(ID, response) {
       let minPlaceholder = document.querySelector(
         `#${ID} .day-${dayX} .max-temp-num`
       );
+
+      let newDate = new Date(dailyForecast.dt * 1000);
+      let dayData = newDate.getDay();
+      let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      let formattedDay = days[dayData];
+
+      dayPlaceholder.innerHTML = formattedDay;
+
+      let maxTemp = Math.round(dailyForecast.temp.max);
+      let minTemp = Math.round(dailyForecast.temp.min);
+      maxPlaceholder.innerHTML = maxTemp;
+      minPlaceholder.innerHTML = minTemp;
+
+      let description = dailyForecast.weather[0].description;
+      changeWeatherIcon(description, iconPlaceholder);
 
       dayX++;
     }
