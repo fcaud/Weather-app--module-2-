@@ -319,7 +319,7 @@ function addSection() {
   newSection.setAttribute("class", "weather-module");
   newSection.setAttribute("id", `module-${moduleX}`);
 
-  newSection.innerHTML = `<form class="search-bar">
+  newSection.innerHTML = `<form class="search-bar" autocomplete="off">
           <input
             type="search"
             name="city-search"

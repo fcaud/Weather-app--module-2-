@@ -141,6 +141,10 @@ a.linkedin-link:hover {
   color: #88a6db;
 }
 
+.weather-cold input:-internal-autofill-selected {
+  color: #88a6db;
+}
+
 .weather-cold .city-search-button,
 .weather-cold .location-button {
   border-color: #88a6db;
