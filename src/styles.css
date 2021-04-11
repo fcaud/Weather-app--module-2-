@@ -54,10 +54,17 @@ hr {
   opacity: 90%;
 }
 
-a.code-source-link {
+a.code-source-link,
+a.linkedin-link,
+p.link-text {
   text-align: center;
-  display: block;
-  margin: 0 auto;
+  display: inline;
+  color: #383a3b;
+}
+
+a.code-source-link:hover,
+a.linkedin-link:hover {
+  color: #3e7fe7;
 }
 
 .header-filler {
@@ -221,6 +228,13 @@ a.code-source-link {
   font-size: 100px;
   background: transparent;
   border: transparent;
+}
+
+.footer-links {
+  color: #383a3b;
+  width: fit-content;
+  display: block;
+  margin: 0 auto;
 }
 
 #date-stamp {
