@@ -4,7 +4,7 @@ function getTemps(ID, response) {
   let cityName = response.data.name;
   let windSpeed = Math.round(response.data.wind.speed);
   let humidity = Math.round(response.data.main.humidity);
-  let weatherDescription = response.data.weather[0].description;
+  let weatherDescription = response.data.weather[0].main;
   let currentLat = response.data.coord.lat;
   let currentLon = response.data.coord.lon;
 
@@ -22,6 +22,8 @@ function getTemps(ID, response) {
   humidityText.innerHTML = humidity;
   changeWeatherIcon(weatherDescription, headlineCityIcon);
   temperatureConditionalFomratting(ID, currentTemp);
+
+  console.log(weatherDescription);
 
   forecastApiRun(currentLat, currentLon, ID);
 }
@@ -54,7 +56,7 @@ function getForecastTemps(ID, response) {
       maxPlaceholder.innerHTML = maxTemp;
       minPlaceholder.innerHTML = minTemp;
 
-      let description = dailyForecast.weather[0].description;
+      let description = dailyForecast.weather[0].main;
       changeWeatherIcon(description, iconPlaceholder);
 
       dayX++;
@@ -156,25 +158,22 @@ function addSection() {
 }
 
 function changeWeatherIcon(description, targetIcon) {
-  if (description === "clear sky") {
+  if (description === "Clear") {
     targetIcon.classList = "fas fa-sun";
-  } else if (description === "few clouds") {
+  } else if (description === "Clouds") {
     targetIcon.classList = "fas fa-cloud-sun";
-  } else if (description === "scattered clouds") {
-    targetIcon.classList = "fas fa-cloud";
-  } else if (description === "broken clouds") {
-    targetIcon.classList = "fas fa-cloud";
-  } else if (description === "shower rain") {
+  } else if (description === "Drizzle") {
     targetIcon.classList = "fas fa-cloud-rain";
-  } else if (description === "rain") {
+  } else if (description === "Rain") {
     targetIcon.classList = "fas fa-cloud-showers-heavy";
-  } else if (description === "thunderstorm") {
+  } else if (description === "Thunderstorm") {
     targetIcon.classList = "fas fa-bolt";
-  } else if (description === "snow") {
+  } else if (description === "Snow") {
     targetIcon.classList = "fas fa-snowflake";
-  } else if (description === "mist") {
+  } else if (description === "Mist") {
     targetIcon.classList = "fas fa-stream";
   }
+  console.log(description);
 }
 
 // ---------------------------------------------------------------------------
@@ -276,7 +275,7 @@ function getCurrentLocation(event) {
 }
 
 // -------------------------------------------------------------
-// Formatting
+// Reformatting
 function temperatureConditionalFomratting(ID, temp) {
   let findSection = document.querySelector(`section#${ID}`);
   if (temp >= 15) {
