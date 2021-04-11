@@ -1,5 +1,4 @@
-// pull the units from the API as opposed to manual conversion in the code  -get rounding diff between manual and api
-
+// Embedding HTML
 function getTemps(ID, response) {
   let currentTemp = Math.round(response.data.main.temp);
   let cityName = response.data.name;
@@ -25,17 +24,6 @@ function getTemps(ID, response) {
   temperatureConditionalFomratting(ID, currentTemp);
 
   forecastApiRun(currentLat, currentLon, ID);
-}
-
-function forecastApiRun(lat, lon, ID) {
-  let weatherApiKey = `a853abb2375faaf0d512fcc19dee1229`;
-  let forecastUnit = "metric";
-
-  let forecastApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${forecastUnit}&appid=${weatherApiKey}`;
-
-  axios.get(forecastApiUrl).then(function (response) {
-    getForecastTemps(ID, response);
-  });
 }
 
 function getForecastTemps(ID, response) {
@@ -71,118 +59,6 @@ function getForecastTemps(ID, response) {
 
       dayX++;
     }
-  });
-}
-
-function changeWeatherIcon(description, targetIcon) {
-  if (description === "clear sky") {
-    targetIcon.classList = "fas fa-sun";
-  } else if (description === "few clouds") {
-    targetIcon.classList = "fas fa-cloud-sun";
-  } else if (description === "scattered clouds") {
-    targetIcon.classList = "fas fa-cloud";
-  } else if (description === "broken clouds") {
-    targetIcon.classList = "fas fa-cloud";
-  } else if (description === "shower rain") {
-    targetIcon.classList = "fas fa-cloud-rain";
-  } else if (description === "rain") {
-    targetIcon.classList = "fas fa-cloud-showers-heavy";
-  } else if (description === "thunderstorm") {
-    targetIcon.classList = "fas fa-bolt";
-  } else if (description === "snow") {
-    targetIcon.classList = "fas fa-snowflake";
-  } else if (description === "mist") {
-    targetIcon.classList = "fas fa-stream";
-  }
-}
-
-function temperatureConditionalFomratting(ID, temp) {
-  let findSection = document.querySelector(`section#${ID}`);
-  if (temp >= 15) {
-    findSection.classList = "weather-module weather-hot";
-  } else {
-    findSection.classList = "weather-module weather-cold";
-  }
-}
-
-function citySearch(event) {
-  event.preventDefault();
-  let targetCityButton = event.target;
-  let section = targetCityButton.closest("section");
-  let sectionID = section.id;
-
-  let citySearched = document
-    .querySelector(`#${sectionID} .city-search-bar`)
-    .value.trim()
-    .toLowerCase();
-
-  let unitToggle = document.querySelector(`#${sectionID} .unit-toggle`);
-
-  let weatherApiKey = `a853abb2375faaf0d512fcc19dee1229`;
-
-  let unit = `metric`;
-
-  if (unitToggle.checked) {
-    unit = `imperial`;
-  } else {
-    unit = `metric`;
-  }
-  let weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${citySearched}&appid=${weatherApiKey}&units=${unit}`;
-
-  let headTemp = document.querySelector(`#${sectionID} .headline-temperature`);
-
-  if (citySearched) {
-    if (!headTemp) {
-      embedSectionContent(sectionID);
-    }
-
-    axios
-      .get(weatherApiUrl)
-      .then((response) => {
-        getTemps(sectionID, response);
-      })
-      .catch((error) => {
-        alert("City not recognised");
-      });
-  }
-}
-
-let searchCity = document.querySelectorAll(".search-bar");
-searchCity.forEach(function (item) {
-  item.addEventListener("submit", citySearch);
-});
-
-function searchCurrentLocation(position, clickEvent) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
-
-  clickEvent.preventDefault();
-  let targetLocationButton = clickEvent.target;
-  let section = targetLocationButton.closest("section");
-  let sectionID = section.id;
-
-  let unitToggle = document.querySelector(`#${sectionID} .unit-toggle`);
-
-  let weatherApiKey = `a853abb2375faaf0d512fcc19dee1229`;
-
-  let unit = `metric`;
-
-  if (unitToggle.checked) {
-    unit = `imperial`;
-  } else {
-    unit = `metric`;
-  }
-
-  let weatherCoordsApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=${unit}`;
-
-  let headTemp = document.querySelector(`#${sectionID} .headline-temperature`);
-
-  if (!headTemp) {
-    embedSectionContent(sectionID);
-  }
-
-  axios.get(weatherCoordsApiUrl).then(function (response) {
-    getTemps(sectionID, response);
   });
 }
 
@@ -233,88 +109,6 @@ function embedSectionContent(ID) {
   forecastHTML = forecastHTML + `</div>`;
   placeholderForecastText.innerHTML = forecastHTML;
 }
-// delete out the values for placeholders for the forecast temps
-
-function getCurrentLocation(event) {
-  event.preventDefault();
-  navigator.geolocation.getCurrentPosition(function (position) {
-    searchCurrentLocation(position, event);
-  });
-}
-
-let currentLocationButton = document.querySelectorAll(".location-button");
-currentLocationButton.forEach(function (item) {
-  item.addEventListener("click", getCurrentLocation);
-});
-
-function formatDateStamp() {
-  let now = new Date();
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  let day = days[now.getDay()];
-  let date = now.getDate();
-  let months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  let month = months[now.getMonth()];
-  let time = now.toLocaleString(undefined, {
-    minute: "2-digit",
-    hour: "2-digit",
-  });
-
-  let dateStamp = document.querySelector("#date-stamp");
-  dateStamp.innerHTML = `${day} ${date} ${month} ${time}`;
-}
-formatDateStamp();
-
-function toggleUnits(event) {
-  let targetUnitToggle = event.target;
-  let section = targetUnitToggle.closest("section");
-  let sectionID = section.id;
-
-  let temps = document.querySelectorAll(`#${sectionID} .temp-num`);
-  let unitLetterDays = document.querySelectorAll(
-    `#${sectionID} .day-temperature`
-  );
-  let unitLetterHead = document.querySelector(
-    `#${sectionID} .headline-temperature`
-  );
-
-  if (temps.length) {
-    if (targetUnitToggle.checked) {
-      temps.forEach(function (item) {
-        item.innerHTML = Math.round((item.innerHTML * 9) / 5 + 32);
-      });
-      unitLetterDays.forEach(function (item) {
-        item.innerHTML = item.innerHTML.replaceAll(`C`, `F`);
-      });
-      unitLetterHead.innerHTML = unitLetterHead.innerHTML.replace(`C`, `F`);
-    } else {
-      temps.forEach(function (item) {
-        item.innerHTML = Math.round(((item.innerHTML - 32) / 9) * 5);
-      });
-      unitLetterDays.forEach(function (item) {
-        item.innerHTML = item.innerHTML.replaceAll(`F`, `C`);
-      });
-      unitLetterHead.innerHTML = unitLetterHead.innerHTML.replace(`F`, `C`);
-    }
-  }
-}
-
-let toggleUnitSwitch = document.querySelectorAll(".unit-toggle");
-toggleUnitSwitch.forEach(function (item) {
-  item.addEventListener("click", toggleUnits);
-});
 
 let moduleX = 1;
 
@@ -360,6 +154,220 @@ function addSection() {
 
   buttonClickEventsNewModules(moduleX);
 }
+
+function changeWeatherIcon(description, targetIcon) {
+  if (description === "clear sky") {
+    targetIcon.classList = "fas fa-sun";
+  } else if (description === "few clouds") {
+    targetIcon.classList = "fas fa-cloud-sun";
+  } else if (description === "scattered clouds") {
+    targetIcon.classList = "fas fa-cloud";
+  } else if (description === "broken clouds") {
+    targetIcon.classList = "fas fa-cloud";
+  } else if (description === "shower rain") {
+    targetIcon.classList = "fas fa-cloud-rain";
+  } else if (description === "rain") {
+    targetIcon.classList = "fas fa-cloud-showers-heavy";
+  } else if (description === "thunderstorm") {
+    targetIcon.classList = "fas fa-bolt";
+  } else if (description === "snow") {
+    targetIcon.classList = "fas fa-snowflake";
+  } else if (description === "mist") {
+    targetIcon.classList = "fas fa-stream";
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Running APIs
+function forecastApiRun(lat, lon, ID) {
+  let weatherApiKey = `a853abb2375faaf0d512fcc19dee1229`;
+  let forecastUnit = "metric";
+
+  let forecastApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${forecastUnit}&appid=${weatherApiKey}`;
+
+  axios.get(forecastApiUrl).then(function (response) {
+    getForecastTemps(ID, response);
+  });
+}
+
+function citySearch(event) {
+  event.preventDefault();
+  let targetCityButton = event.target;
+  let section = targetCityButton.closest("section");
+  let sectionID = section.id;
+
+  let citySearched = document
+    .querySelector(`#${sectionID} .city-search-bar`)
+    .value.trim()
+    .toLowerCase();
+
+  let unitToggle = document.querySelector(`#${sectionID} .unit-toggle`);
+
+  let weatherApiKey = `a853abb2375faaf0d512fcc19dee1229`;
+
+  let unit = `metric`;
+
+  if (unitToggle.checked) {
+    unit = `imperial`;
+  } else {
+    unit = `metric`;
+  }
+  let weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${citySearched}&appid=${weatherApiKey}&units=${unit}`;
+
+  let headTemp = document.querySelector(`#${sectionID} .headline-temperature`);
+
+  if (citySearched) {
+    if (!headTemp) {
+      embedSectionContent(sectionID);
+    }
+
+    axios
+      .get(weatherApiUrl)
+      .then((response) => {
+        getTemps(sectionID, response);
+      })
+      .catch((error) => {
+        alert("City not recognised");
+      });
+  }
+}
+
+function searchCurrentLocation(position, clickEvent) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+
+  clickEvent.preventDefault();
+  let targetLocationButton = clickEvent.target;
+  let section = targetLocationButton.closest("section");
+  let sectionID = section.id;
+
+  let unitToggle = document.querySelector(`#${sectionID} .unit-toggle`);
+
+  let weatherApiKey = `a853abb2375faaf0d512fcc19dee1229`;
+
+  let unit = `metric`;
+
+  if (unitToggle.checked) {
+    unit = `imperial`;
+  } else {
+    unit = `metric`;
+  }
+
+  let weatherCoordsApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=${unit}`;
+
+  let headTemp = document.querySelector(`#${sectionID} .headline-temperature`);
+
+  if (!headTemp) {
+    embedSectionContent(sectionID);
+  }
+
+  axios.get(weatherCoordsApiUrl).then(function (response) {
+    getTemps(sectionID, response);
+  });
+}
+
+// ------------------------------------------------------------
+// Get location
+function getCurrentLocation(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(function (position) {
+    searchCurrentLocation(position, event);
+  });
+}
+
+// -------------------------------------------------------------
+// Formatting
+function temperatureConditionalFomratting(ID, temp) {
+  let findSection = document.querySelector(`section#${ID}`);
+  if (temp >= 15) {
+    findSection.classList = "weather-module weather-hot";
+  } else {
+    findSection.classList = "weather-module weather-cold";
+  }
+}
+
+function formatDateStamp() {
+  let now = new Date();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let day = days[now.getDay()];
+  let date = now.getDate();
+  let months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let month = months[now.getMonth()];
+  let time = now.toLocaleString(undefined, {
+    minute: "2-digit",
+    hour: "2-digit",
+  });
+
+  let dateStamp = document.querySelector("#date-stamp");
+  dateStamp.innerHTML = `${day} ${date} ${month} ${time}`;
+}
+formatDateStamp();
+
+// --------------------------------------------------------------------------
+// Unit toggle calculation
+function toggleUnits(event) {
+  let targetUnitToggle = event.target;
+  let section = targetUnitToggle.closest("section");
+  let sectionID = section.id;
+
+  let temps = document.querySelectorAll(`#${sectionID} .temp-num`);
+  let unitLetterDays = document.querySelectorAll(
+    `#${sectionID} .day-temperature`
+  );
+  let unitLetterHead = document.querySelector(
+    `#${sectionID} .headline-temperature`
+  );
+
+  if (temps.length) {
+    if (targetUnitToggle.checked) {
+      temps.forEach(function (item) {
+        item.innerHTML = Math.round((item.innerHTML * 9) / 5 + 32);
+      });
+      unitLetterDays.forEach(function (item) {
+        item.innerHTML = item.innerHTML.replaceAll(`C`, `F`);
+      });
+      unitLetterHead.innerHTML = unitLetterHead.innerHTML.replace(`C`, `F`);
+    } else {
+      temps.forEach(function (item) {
+        item.innerHTML = Math.round(((item.innerHTML - 32) / 9) * 5);
+      });
+      unitLetterDays.forEach(function (item) {
+        item.innerHTML = item.innerHTML.replaceAll(`F`, `C`);
+      });
+      unitLetterHead.innerHTML = unitLetterHead.innerHTML.replace(`F`, `C`);
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// event listeners
+let searchCity = document.querySelectorAll(".search-bar");
+searchCity.forEach(function (item) {
+  item.addEventListener("submit", citySearch);
+});
+
+let currentLocationButton = document.querySelectorAll(".location-button");
+currentLocationButton.forEach(function (item) {
+  item.addEventListener("click", getCurrentLocation);
+});
+
+let toggleUnitSwitch = document.querySelectorAll(".unit-toggle");
+toggleUnitSwitch.forEach(function (item) {
+  item.addEventListener("click", toggleUnits);
+});
 
 function buttonClickEventsNewModules(ID) {
   let newSearchButton = document.querySelector(
