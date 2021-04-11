@@ -136,9 +136,14 @@ function citySearch(event) {
       embedSectionContent(sectionID);
     }
 
-    axios.get(weatherApiUrl).then(function (response) {
-      getTemps(sectionID, response);
-    });
+    axios
+      .get(weatherApiUrl)
+      .then((response) => {
+        getTemps(sectionID, response);
+      })
+      .catch((error) => {
+        alert("City not recognised");
+      });
   }
 }
 
