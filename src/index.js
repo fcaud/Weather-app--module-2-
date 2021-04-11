@@ -192,7 +192,7 @@ function embedSectionContent(ID) {
   placeholderCityText.classList = "city-summary";
   placeholderCityText.innerHTML = `<h2 class="city-header">-</h2>
           <div class="headline-weather-icon icon">
-            <i class="fas"></i>
+            <i class="fas fa-cloud-rain"></i>
           </div>
           <div class="headline-temperature">
             <span class="temp-num">-</span>°C
@@ -220,7 +220,7 @@ function embedSectionContent(ID) {
       `<div class="col day-${dayX}">
         <h3>${day}</h3>
               <div class="day-weather-icon icon">
-                <i class="fas"></i>
+                <i class="fas fa-cloud-rain"></i>
               </div>
               <p class="day-temperature">
                 <span class="min-temp-num">-</span>°C /
