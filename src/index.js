@@ -158,20 +158,28 @@ function addSection() {
 function changeWeatherIcon(description, targetIcon) {
   if (description === "Clear") {
     targetIcon.classList = "fas fa-sun";
+    targetIcon.setAttribute("title", description);
   } else if (description === "Clouds") {
     targetIcon.classList = "fas fa-cloud-sun";
+    targetIcon.setAttribute("title", description);
   } else if (description === "Drizzle") {
     targetIcon.classList = "fas fa-cloud-rain";
+    targetIcon.setAttribute("title", description);
   } else if (description === "Rain") {
     targetIcon.classList = "fas fa-cloud-showers-heavy";
+    targetIcon.setAttribute("title", description);
   } else if (description === "Thunderstorm") {
     targetIcon.classList = "fas fa-bolt";
+    targetIcon.setAttribute("title", description);
   } else if (description === "Snow") {
     targetIcon.classList = "fas fa-snowflake";
+    targetIcon.setAttribute("title", description);
   } else if (description === "Mist") {
     targetIcon.classList = "fas fa-stream";
+    targetIcon.setAttribute("title", description);
   } else {
     targetIcon.classList = "fas fa-stream";
+    targetIcon.setAttribute("title", description);
   }
 }
 
