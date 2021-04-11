@@ -170,6 +170,8 @@ function changeWeatherIcon(description, targetIcon) {
     targetIcon.classList = "fas fa-snowflake";
   } else if (description === "Mist") {
     targetIcon.classList = "fas fa-stream";
+  } else {
+    targetIcon.classList = "fas fa-stream";
   }
 }
 
