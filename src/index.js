@@ -23,8 +23,6 @@ function getTemps(ID, response) {
   changeWeatherIcon(weatherDescription, headlineCityIcon);
   temperatureConditionalFomratting(ID, currentTemp);
 
-  console.log(weatherDescription);
-
   forecastApiRun(currentLat, currentLon, ID);
 }
 
@@ -173,7 +171,6 @@ function changeWeatherIcon(description, targetIcon) {
   } else if (description === "Mist") {
     targetIcon.classList = "fas fa-stream";
   }
-  console.log(description);
 }
 
 // ---------------------------------------------------------------------------
