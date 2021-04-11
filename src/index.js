@@ -7,6 +7,8 @@ function getTemps(ID, response) {
   let windSpeed = Math.round(response.data.wind.speed);
   let humidity = Math.round(response.data.main.humidity);
   let weatherDescription = response.data.weather[0].description;
+  let currentLat = response.data.coord.lat;
+  let currentLon = response.data.coord.lon;
 
   let cityHeader = document.querySelector(`#${ID} h2`);
   let headlineCityIcon = document.querySelector(
@@ -22,6 +24,41 @@ function getTemps(ID, response) {
   humidityText.innerHTML = humidity;
   changeWeatherIcon(weatherDescription, headlineCityIcon);
   temperatureConditionalFomratting(ID, currentTemp);
+
+  forecastApiRun(currentLat, currentLon, ID);
+}
+
+function forecastApiRun(lat, lon, ID) {
+  let weatherApiKey = `a853abb2375faaf0d512fcc19dee1229`;
+  let forecastUnit = "metric";
+
+  let forecastApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&unit=${forecastUnit}&appid=${weatherApiKey}`;
+
+  axios.get(forecastApiUrl).then(function (response) {
+    getForecastTemps(ID, response);
+  });
+}
+
+function getForecastTemps(ID, response) {
+  console.log(response.data);
+  let dailyForecast = response.data.daily;
+
+  let dayX = 0;
+
+  dailyForecast.forEach(function () {
+    if (dayX < 5) {
+      let dayPlaceholder = document.querySelector(`#${ID} .day-${dayX} h3`);
+      let iconPlaceholder = document.querySelector(`#${ID} .day-${dayX} i`);
+      let maxPlaceholder = document.querySelector(
+        `#${ID} .day-${dayX} .min-temp-num`
+      );
+      let minPlaceholder = document.querySelector(
+        `#${ID} .day-${dayX} .max-temp-num`
+      );
+
+      dayX++;
+    }
+  });
 }
 
 function changeWeatherIcon(description, targetIcon) {
@@ -157,19 +194,22 @@ function embedSectionContent(ID) {
   let forecastDays = ["Mon", "Tue", "Wed", "Thu", "Fri"];
   let forecastHTML = `<div class="row">`;
 
+  let dayX = 0;
+
   forecastDays.forEach(function (day) {
     forecastHTML =
       forecastHTML +
-      `<div class="col">
+      `<div class="col day-${dayX}">
         <h3>${day}</h3>
               <div class="day-weather-icon icon">
                 <i class="fas fa-cloud-rain"></i>
               </div>
               <p class="day-temperature">
-                <span class="temp-num">3</span>°C /
-                <strong><span class="temp-num">5</span>°C</strong>
+                <span class="min-temp-num">-</span>°C /
+                <strong><span class="max-temp-num">-</span>°C</strong>
               </p>
         </div>`;
+    dayX++;
   });
 
   forecastHTML = forecastHTML + `</div>`;
