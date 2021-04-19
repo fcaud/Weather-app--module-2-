@@ -21,7 +21,7 @@ function getTemps(ID, response) {
   windSpeedText.innerHTML = windSpeed;
   humidityText.innerHTML = humidity;
   changeWeatherIcon(weatherDescription, headlineCityIcon);
-  temperatureConditionalFomratting(ID, currentTemp);
+  temperatureConditionalFormatting(ID, currentTemp);
 
   forecastApiRun(currentLat, currentLon, ID);
 }
@@ -283,7 +283,7 @@ function getCurrentLocation(event) {
 
 // -------------------------------------------------------------
 // Reformatting
-function temperatureConditionalFomratting(ID, temp) {
+function temperatureConditionalFormatting(ID, temp) {
   let findSection = document.querySelector(`section#${ID}`);
   if (temp >= 15) {
     findSection.classList = "weather-module weather-hot";
