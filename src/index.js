@@ -1,12 +1,16 @@
 // Embedding HTML
 function getTemps(ID, response) {
-  let currentTemp = Math.round(response.data.main.temp);
-  let cityName = response.data.name;
-  let windSpeed = Math.round(response.data.wind.speed);
-  let humidity = Math.round(response.data.main.humidity);
-  let weatherDescription = response.data.weather[0].main;
-  let currentLat = response.data.coord.lat;
-  let currentLon = response.data.coord.lon;
+  let data = response.data;
+  let main = data.main;
+  let coord = data.coord;
+
+  let currentTemp = Math.round(main.temp);
+  let cityName = data.name;
+  let windSpeed = Math.round(data.wind.speed);
+  let humidity = Math.round(main.humidity);
+  let weatherDescription = data.weather[0].main;
+  let currentLat = coord.lat;
+  let currentLon = coord.lon;
 
   let cityHeader = document.querySelector(`#${ID} h2`);
   let headlineCityIcon = document.querySelector(
@@ -239,8 +243,9 @@ function citySearch(event) {
 }
 
 function searchCurrentLocation(position, clickEvent) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
+  let coords = position.coords;
+  let latitude = coords.latitude;
+  let longitude = coords.longitude;
 
   clickEvent.preventDefault();
   let targetLocationButton = clickEvent.target;
@@ -320,7 +325,6 @@ function formatDateStamp() {
   let dateStamp = document.querySelector("#date-stamp");
   dateStamp.innerHTML = `${day} ${date} ${month} ${time}`;
 }
-formatDateStamp();
 
 // --------------------------------------------------------------------------
 // Unit toggle calculation
@@ -392,3 +396,7 @@ function buttonClickEventsNewModules(ID) {
 
 let addSectionButton = document.querySelector(`.add-module button`);
 addSectionButton.addEventListener("click", addSection);
+
+// ------------------------------------------------------------
+// function runs on load
+formatDateStamp();
